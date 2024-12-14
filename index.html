@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>SpriteDeets</title>
+
+</head>
+
+<body>
+Heyooooooooo!
+<button id="upload-image">Upload Image</button>
+<div id="app"></div>
+    <script type="module" src="/js/bundle.js"></script>
+    <script>
+        // Set up WebSocket connection for live reload
+        const socket = new WebSocket(`ws://${location.host}/ws`);
+        socket.onmessage = (event) => {
+            if (event.data === "reload") {
+                location.reload();
+            }
+        };
+    </script>
+</body>
+</html>
