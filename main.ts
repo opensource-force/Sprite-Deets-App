@@ -23,9 +23,9 @@ async function bundleTS() {
     });
 
     await esbuild.build({
-      entryPoints: ['src/styles.css'],   // CSS entry point (make sure to have this file)
+      entryPoints: ['src/styles.css'],
       bundle: true,
-      outfile: 'public/css/bundle.css', // Output path for the bundled CSS
+      outfile: 'public/css/bundle.css',
     });
     
     console.log('Bundle successful:', new Date().toLocaleTimeString());
@@ -57,17 +57,16 @@ serve(async (req) => {
     return response;
   }
 
-  // Serve static assets from the "public" directory
   return await serveDir(req, {
-    fsRoot: "public", // Static assets should be inside the "public" folder
-    urlRoot: "",      // All assets are served at the root level
+    fsRoot: "public",
+    urlRoot: "",
   });
 }, { port: PORT });
 
 console.log(`Dev server running on http://localhost:${PORT}`);
 
 for await (const event of watcher) {
-  console.log("Watcher has seen some changes:", event);
+  console.log("Watcher has seen some things...", event);
   await bundleTS();
   sockets.forEach((socket) => {
     socket.send("reload");
