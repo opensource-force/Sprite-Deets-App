@@ -1,7 +1,7 @@
 {
   "version": 3,
-  "sources": ["../../src/app.ts"],
-  "sourcesContent": ["console.log('hey there pardner');\n\n"],
-  "mappings": ";AAAA,QAAQ,IAAI,mBAAmB;",
+  "sources": ["../../src/image/image.ts", "../../src/app.ts"],
+  "sourcesContent": ["export class Image {\n  name: string;\n\n  constructor(path: string, name: string) {\n    // load image from path, and add to the dom\n    // see Hell's example code\n\n    this.name = name;\n  }\n\n  get pixels(): Array<number> {\n    // get image's pixels from the main canvas\n  }\n\n  set pixels(newPixels: Array<number>) {\n    // set image's pixels on the main canvas\n  }\n\n  // etc\n};\n", "import { Image } from './image/image.ts';\n\nconsole.log('hey there pardner');\n\nconst init = async () => {\n  // handle all your on load setup here\n\n  document.getElementById('upload-image').addEventListener('click', (evt) => { // <---- here evt is ignored, but \n\n  const newImage = new Image('<put path here>', '<put name here>'); \n                                                                               // will be useful in the future\n    window.alert(`\n      here is where you would implement image uploading, \n      which will give you a path, \n      which you use in the constructor of the image,\n      which will have the name ${newImage.name}\n    `);\n  });\n};\n\nif(document.readyState !== 'loading') {\n  init()\n    .then(console.log);\n} else {\n  window.addEventListener(\"DOMContentLoaded\", init);\n}\n"],
+  "mappings": ";;;;;;;;AAAO,IAAM,QAAN,MAAY;AAAA,EAGjB,YAAY,MAAc,MAAc;AAFxC;AAME,SAAK,OAAO;AAAA,EACd;AAAA,EAEA,IAAI,SAAwB;AAAA,EAE5B;AAAA,EAEA,IAAI,OAAO,WAA0B;AAAA,EAErC;AAAA;AAGF;;;ACjBA,QAAQ,IAAI,mBAAmB;AAE/B,IAAM,OAAO,YAAY;AAGvB,WAAS,eAAe,cAAc,EAAE,iBAAiB,SAAS,CAAC,QAAQ;AAE3E,UAAM,WAAW,IAAI,MAAM,mBAAmB,iBAAiB;AAE7D,WAAO,MAAM;AAAA;AAAA;AAAA;AAAA,iCAIgB,SAAS,IAAI;AAAA,KACzC;AAAA,EACH,CAAC;AACH;AAEA,IAAG,SAAS,eAAe,WAAW;AACpC,OAAK,EACF,KAAK,QAAQ,GAAG;AACrB,OAAO;AACL,SAAO,iBAAiB,oBAAoB,IAAI;AAClD;",
   "names": []
 }

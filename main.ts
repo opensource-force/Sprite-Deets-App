@@ -3,7 +3,7 @@ import { serveDir } from "https://deno.land/std/http/file_server.ts";
 import * as esbuild from "https://deno.land/x/esbuild@v0.19.12/mod.js";
 
 let bytes;
-const PORT = process.env.PORT || PORT;
+const PORT = process.env.PORT || 8000;
 
 let watcher = Deno.watchFs(["./index.html", "./src"], { recursive: true });
 
