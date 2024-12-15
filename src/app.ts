@@ -1,8 +1,8 @@
 import { Image } from "./image/image.ts";
-import { Toolbar } from "./components.ts/toolbar.ts";
-import { SpriteCanvas } from "./components.ts/sprite-canvas.ts";
-import { Timeline } from "./components.ts/timeline.ts";
-import { AppComponent } from "./components.ts/app-component.ts";
+import { Toolbar } from "./components/toolbar.ts";
+import { SpriteCanvas } from "./components/sprite-canvas.ts";
+import { Timeline } from "./components/timeline.ts";
+import { AppComponent } from "./components/app-component.ts";
 
 const init = () => {
   // handle all your on load setup here
