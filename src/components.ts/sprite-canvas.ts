@@ -1,16 +1,18 @@
+import { Component } from "../component.ts";
+
 export class SpriteCanvas implements Component {
-    private content: string;
-    static id = `sprite-canvas`;
+  private content: string;
+  static id = `sprite-canvas`;
 
-    constructor(content: string) {
-        this.content = content;
-    }
+  constructor(content: string) {
+    this.content = content;
+  }
 
-    render(): HTMLElement {
-        const style = document.createElement('style');
-        style.textContent = `
+  render(style: string | null): HTMLElement {
+    const localStyle = document.createElement("style");
+    localStyle.textContent = `
         .${SpriteCanvas.id} {
-            grid-area: canvas;
+            ${style}
             height: auto;
             background: #ffffff;
             display: flex;
@@ -20,11 +22,11 @@ export class SpriteCanvas implements Component {
             border-radius: 10px;
           }
         `;
-        document.head.appendChild(style);
-        
-        const canvas = document.createElement('div');
-        canvas.className = SpriteCanvas.id;
-        canvas.innerHTML = `<p>${this.content}</p>`;
-        return canvas;
-    }
+    document.head.appendChild(localStyle);
+
+    const canvas = document.createElement("div");
+    canvas.className = SpriteCanvas.id;
+    canvas.innerHTML = `<p>${this.content}</p>`;
+    return canvas;
+  }
 }

@@ -4,6 +4,14 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
-    "@std/http": "jsr:@std/http@1"
-  }
+    "@std/http": "jsr:@std/http@^1.0.12"
+  },
+  "compilerOptions": {
+    "lib": [
+      "dom"
+    ]
+  },
+  "unstable": [
+    "sloppy-imports"
+  ]
 }

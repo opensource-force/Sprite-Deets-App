@@ -1,16 +1,18 @@
+import { Component } from "../component.ts";
+
 export class Timeline implements Component {
-    private content: string;
-    static id = `timeline`;
+  private content: string;
+  static id = `timeline`;
 
-    constructor(content: string) {
-        this.content = content;
-    }
+  constructor(content: string) {
+    this.content = content;
+  }
 
-    render(): HTMLElement {
-        const style = document.createElement('style');
-        style.textContent = `
+  render(style: string | null): HTMLElement {
+    const localStyle = document.createElement("style");
+    localStyle.textContent = `
         .${Timeline.id} {
-            grid-column: span 3;
+            ${style}
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -21,11 +23,11 @@ export class Timeline implements Component {
             border-radius: 10px;
         }
         `;
-        document.head.appendChild(style);
+    document.head.appendChild(localStyle);
 
-        const timeline = document.createElement('div');
-        timeline.className = Timeline.id;
-        timeline.innerHTML = `<p>${this.content}</p>`;
-        return timeline;
-    }
+    const timeline = document.createElement("div");
+    timeline.className = Timeline.id;
+    timeline.innerHTML = `<p>${this.content}</p>`;
+    return timeline;
+  }
 }

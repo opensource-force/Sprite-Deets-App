@@ -1,15 +1,27 @@
+import { Component } from "../component.ts";
+
 export class AppComponent implements Component {
-    private children: HTMLElement[] = [];
-    static id = `app-component`;
+  leftToolbar: Component;
+  rightToolbar: Component;
+  bottomToolbar: Component;
+  canvas: Component;
+  static id = `app-component`;
 
-    constructor(content: string, children: HTMLElement[] = []) {
-        this.content = content;
-        this.children = children; 
-    }
+  constructor(
+    leftToolbar: Component,
+    rightToolbar: Component,
+    bottomToolbar: Component,
+    canvas: Component,
+  ) {
+    this.leftToolbar = leftToolbar;
+    this.rightToolbar = rightToolbar;
+    this.bottomToolbar = bottomToolbar;
+    this.canvas = canvas;
+  }
 
-    render(): HTMLElement {
-        const style = document.createElement('style');
-        style.textContent = `
+  render(_style: string | null): HTMLElement {
+    const style = document.createElement("style");
+    style.textContent = `
         .${AppComponent.id} {
             display: grid;
             grid-template-areas: 
@@ -21,15 +33,22 @@ export class AppComponent implements Component {
             border-radius: 10px;
         }
         `;
-        document.head.appendChild(style);
-        
-        const app = document.createElement('div');
-        app.className = AppComponent.id;
+    document.head.appendChild(style);
 
-        this.children.forEach(child => {
-            app.appendChild(child);
-        });
+    const app = document.createElement("div");
+    app.className = AppComponent.id;
 
-        return app;
-    }
+    app.appendChild(this.leftToolbar.render(`
+    grid-area: left;
+    margin-right: 0.5rem;
+    `));
+    app.appendChild(this.canvas.render("grid-area: canvas;"));
+    app.appendChild(this.rightToolbar.render(`
+    grid-area: right;
+    margin-left: 0.5rem;
+    `));
+    app.appendChild(this.bottomToolbar.render("grid-column: span 3;"));
+
+    return app;
+  }
 }
