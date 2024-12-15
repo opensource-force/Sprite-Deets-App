@@ -1,11 +1,11 @@
-import { serve } from "https://deno.land/std/http/server.ts";
 import { serveDir } from "https://deno.land/std/http/file_server.ts";
 import * as esbuild from "https://deno.land/x/esbuild@v0.19.12/mod.js";
+import process from "node:process";
 
 let bytes;
 const PORT = process.env.PORT || 8000;
 
-let watcher = Deno.watchFs(["./index.html", "./src"], { recursive: true });
+const watcher = Deno.watchFs(["./index.html", "./src"], { recursive: true });
 
 await esbuild.initialize({});
 
@@ -13,19 +13,25 @@ async function bundleTS() {
   bytes = await Deno.readFile("index.html");
   try {
     const result = await esbuild.build({
-      entryPoints: ['src/app.ts'],
+      entryPoints: ["src/app.ts"],
       bundle: true,
-      outfile: 'public/js/bundle.js',
-      format: 'esm',
-      platform: 'browser',
+      outfile: "public/js/bundle.js",
+      format: "esm",
+      platform: "browser",
       sourcemap: true,
-      target: 'es2020',
+      target: "es2020",
     });
-    
-    console.log('Bundle successful:', new Date().toLocaleTimeString());
+
+    await esbuild.build({
+      entryPoints: ["src/styles.css"],
+      bundle: true,
+      outfile: "public/css/bundle.css",
+    });
+
+    console.log("Bundle successful:", new Date().toLocaleTimeString());
     return result;
   } catch (error) {
-    console.error('Bundle failed:', error);
+    console.error("Bundle failed:", error);
   }
 }
 
@@ -33,13 +39,13 @@ await bundleTS();
 
 const sockets = new Set<WebSocket>();
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   const url = new URL(req.url);
 
-  if(url.pathname === '/') {
+  if (url.pathname === "/") {
     return new Response(bytes);
   }
-  
+
   if (req.headers.get("upgrade") === "websocket") {
     const { socket, response } = Deno.upgradeWebSocket(req);
     socket.onopen = () => {
@@ -57,7 +63,8 @@ serve(async (req) => {
   });
 }, { port: PORT });
 
-console.log("Dev server running on http://localhost:PORT");
+console.log(`Dev server running on http://localhost:${PORT}`);
+
 for await (const event of watcher) {
   console.log("Watcher has seen some things...", event);
   await bundleTS();
@@ -65,5 +72,3 @@ for await (const event of watcher) {
     socket.send("reload");
   });
 }
-
-

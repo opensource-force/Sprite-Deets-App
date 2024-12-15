@@ -1,26 +1,36 @@
-import { Image } from './image/image.ts';
+import { Image } from "./image/image.ts";
+import { Toolbar } from "./components/toolbar.ts";
+import { SpriteCanvas } from "./components/sprite-canvas.ts";
+import { Timeline } from "./components/timeline.ts";
+import { AppComponent } from "./components/app-component.ts";
 
-console.log('hey there pardner');
-
-const init = async () => {
+const init = () => {
   // handle all your on load setup here
-
-  document.getElementById('upload-image').addEventListener('click', (evt) => { // <---- here evt is ignored, but 
-
-  const newImage = new Image('<put path here>', '<put name here>'); 
-                                                                               // will be useful in the future
-    window.alert(`
-      here is where you would implement image uploading, 
-      which will give you a path, 
-      which you use in the constructor of the image,
-      which will have the name ${newImage.name}
-    `);
-  });
+  const _newImage = new Image("<put path here>", "<put name here>");
+  // will be useful in the future
+  // window.alert(`
+  //   here is where you would implement image uploading,
+  //   which will give you a path,
+  //   which you use in the constructor of the image,
+  //   which will have the name ${newImage.name}
+  // `);
 };
 
-if(document.readyState !== 'loading') {
-  init()
-    .then(console.log);
+const app = document.getElementById("app");
+
+if (app) {
+  app.appendChild(
+    new AppComponent(
+      new Toolbar("left", "Toolbar"),
+      new Toolbar("right", "Toolbar"),
+      new Timeline("Timeline"),
+      new SpriteCanvas("Canvas"),
+    ).render(null),
+  );
+}
+
+if (document.readyState !== "loading") {
+  init();
 } else {
-  window.addEventListener("DOMContentLoaded", init);
+  self.addEventListener("DOMContentLoaded", init);
 }

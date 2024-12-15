@@ -1,5 +1,5 @@
 {
-  "compilerOptions": {
-    "src": ["dom", "deno.ns"]
+    "compilerOptions": {
+      "src": ["dom", "deno.ns"]
+    }
   }
-}
