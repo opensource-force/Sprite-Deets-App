@@ -9,8 +9,10 @@ export class Timeline implements Component {
   }
 
   render(contextualStyle: string | null): HTMLElement {
+    const element = updateElement(this, [], `<p>${this.content}</p>`);
     updateStyle(
-      this,
+      element,
+      `.${this.id}`,
       contextualStyle,
       `
       display: flex;
@@ -23,7 +25,6 @@ export class Timeline implements Component {
       border-radius: 10px;
       `,
     );
-
-    return updateElement(this, [], `<p>${this.content}</p>`);
+    return element;
   }
 }

@@ -14,8 +14,16 @@ export class Toolbar implements Component {
   }
 
   render(contextualStyle: string | null): HTMLElement {
+    const element = updateElement(this, [], `<p>${this.content}</p>`);
+    element.onclick = () => {
+      setTimeout(() => {
+        this.toggle = !this.toggle;
+        this.render(contextualStyle);
+      }, 500);
+    };
     updateStyle(
-      this,
+      element,
+      `.${this.id}`,
       contextualStyle,
       `
       ${this.toggle ? "background: #fff;" : "background: #ee9999;"}
@@ -26,14 +34,6 @@ export class Toolbar implements Component {
       border-radius: 10px;
       `,
     );
-
-    const element = updateElement(this, [], `<p>${this.content}</p>`);
-    element.onclick = () => {
-      setTimeout(() => {
-        this.toggle = !this.toggle;
-        this.render(contextualStyle);
-      }, 500);
-    };
     return element;
   }
 }

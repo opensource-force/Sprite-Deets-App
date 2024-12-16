@@ -1,7 +1,4 @@
 import { Image } from "./image/image.ts";
-import { Toolbar } from "./components/toolbar.ts";
-import { SpriteCanvas } from "./components/sprite-canvas.ts";
-import { Timeline } from "./components/timeline.ts";
 import { AppComponent } from "./components/app-component.ts";
 
 const init = () => {
@@ -16,18 +13,7 @@ const init = () => {
   // `);
 };
 
-const app = document.getElementById("app");
-
-if (app) {
-  app.appendChild(
-    new AppComponent(
-      new Toolbar("left", "Toolbar"),
-      new Toolbar("right", "Toolbar"),
-      new Timeline("Timeline"),
-      new SpriteCanvas("Canvas"),
-    ).render(null),
-  );
-}
+new AppComponent().render(null);
 
 if (document.readyState !== "loading") {
   init();
