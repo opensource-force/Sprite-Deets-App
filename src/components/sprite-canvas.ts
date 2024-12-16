@@ -9,8 +9,10 @@ export class SpriteCanvas implements Component {
   }
 
   render(contextualStyle: string | null): HTMLElement {
+    const element = updateElement(this, [], `<p>${this.content}</p>`);
     updateStyle(
-      this,
+      element,
+      `.${this.id}`,
       contextualStyle,
       `
       height: auto;
@@ -22,7 +24,6 @@ export class SpriteCanvas implements Component {
       border-radius: 10px;
       `,
     );
-
-    return updateElement(this, [], `<p>${this.content}</p>`);
+    return element;
   }
 }

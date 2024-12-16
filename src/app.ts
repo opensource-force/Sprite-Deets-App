@@ -1,7 +1,4 @@
 import { Image } from "./image/image.ts";
-import { Toolbar } from "./components/toolbar.ts";
-import { SpriteCanvas } from "./components/sprite-canvas.ts";
-import { Timeline } from "./components/timeline.ts";
 import { AppComponent } from "./components/app-component.ts";
 
 const init = () => {

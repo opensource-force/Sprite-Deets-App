@@ -20,21 +20,7 @@ export class SpriteEditor implements Component {
   }
 
   render(contextualStyle: string | null): HTMLElement {
-    updateStyle(
-      `.${this.id}`,
-      contextualStyle,
-      `
-        display: grid;
-        grid-template-areas: 
-            "left canvas right";
-        grid-template-columns: 1fr 3fr 1fr;
-        grid-template-rows: 80% auto;
-        height: calc(100vh - 1rem);
-        width: 100%;
-        border-radius: 10px;
-        `,
-    );
-    return updateElement(
+    const element = updateElement(
       this,
       [
         this.leftToolbar.render(`
@@ -50,5 +36,21 @@ export class SpriteEditor implements Component {
       ],
       null,
     );
+    updateStyle(
+      element,
+      `.${this.id}`,
+      contextualStyle,
+      `
+    display: grid;
+    grid-template-areas: 
+        "left canvas right";
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 80% auto;
+    height: calc(100vh - 1rem);
+    width: 100%;
+    border-radius: 10px;
+    `,
+    );
+    return element;
   }
 }

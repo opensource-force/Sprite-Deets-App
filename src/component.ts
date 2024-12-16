@@ -4,6 +4,7 @@ export interface Component {
 }
 
 export function updateStyle(
+  element: HTMLElement,
   id: string,
   contextualStyle: string | null,
   style: string,
@@ -13,14 +14,14 @@ export function updateStyle(
   if (!localStyle) {
     localStyle = document.createElement("style");
     localStyle.id = styleId;
-    document.body.appendChild(localStyle);
   }
   localStyle.textContent = `
-        ${id} {
-            ${contextualStyle === null ? "" : contextualStyle}
-            ${style}
-        }
-        `;
+  ${id} {
+    ${contextualStyle === null ? "" : contextualStyle}
+    ${style}
+  }
+  `;
+  element.append(localStyle);
 }
 
 export function updateElement(

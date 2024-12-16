@@ -20,20 +20,20 @@ var Image = class {
 };
 
 // src/component.ts
-function updateStyle(id, contextualStyle, style) {
+function updateStyle(element, id, contextualStyle, style) {
   const styleId = `${id}-style`;
   let localStyle = document.getElementById(styleId);
   if (!localStyle) {
     localStyle = document.createElement("style");
     localStyle.id = styleId;
-    document.body.appendChild(localStyle);
   }
   localStyle.textContent = `
-        ${id} {
-            ${contextualStyle === null ? "" : contextualStyle}
-            ${style}
-        }
-        `;
+  ${id} {
+    ${contextualStyle === null ? "" : contextualStyle}
+    ${style}
+  }
+  `;
+  element.append(localStyle);
 }
 function updateElement(component, children, innerHTML) {
   const id = `${component.id}`;
@@ -65,8 +65,10 @@ var SpriteCanvas = class {
     this.content = content;
   }
   render(contextualStyle) {
+    const element = updateElement(this, [], `<p>${this.content}</p>`);
     updateStyle(
-      this,
+      element,
+      `.${this.id}`,
       contextualStyle,
       `
       height: auto;
@@ -78,7 +80,7 @@ var SpriteCanvas = class {
       border-radius: 10px;
       `
     );
-    return updateElement(this, [], `<p>${this.content}</p>`);
+    return element;
   }
 };
 
@@ -96,21 +98,7 @@ var SpriteEditor = class {
     this.canvas = canvas;
   }
   render(contextualStyle) {
-    updateStyle(
-      `.${this.id}`,
-      contextualStyle,
-      `
-        display: grid;
-        grid-template-areas: 
-            "left canvas right";
-        grid-template-columns: 1fr 3fr 1fr;
-        grid-template-rows: 80% auto;
-        height: calc(100vh - 1rem);
-        width: 100%;
-        border-radius: 10px;
-        `
-    );
-    return updateElement(
+    const element = updateElement(
       this,
       [
         this.leftToolbar.render(`
@@ -126,6 +114,22 @@ var SpriteEditor = class {
       ],
       null
     );
+    updateStyle(
+      element,
+      `.${this.id}`,
+      contextualStyle,
+      `
+    display: grid;
+    grid-template-areas: 
+        "left canvas right";
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 80% auto;
+    height: calc(100vh - 1rem);
+    width: 100%;
+    border-radius: 10px;
+    `
+    );
+    return element;
   }
 };
 
@@ -137,8 +141,10 @@ var Timeline = class {
     this.content = content;
   }
   render(contextualStyle) {
+    const element = updateElement(this, [], `<p>${this.content}</p>`);
     updateStyle(
-      this,
+      element,
+      `.${this.id}`,
       contextualStyle,
       `
       display: flex;
@@ -151,7 +157,7 @@ var Timeline = class {
       border-radius: 10px;
       `
     );
-    return updateElement(this, [], `<p>${this.content}</p>`);
+    return element;
   }
 };
 
@@ -168,8 +174,16 @@ var Toolbar = class {
     this.toggle = false;
   }
   render(contextualStyle) {
+    const element = updateElement(this, [], `<p>${this.content}</p>`);
+    element.onclick = () => {
+      setTimeout(() => {
+        this.toggle = !this.toggle;
+        this.render(contextualStyle);
+      }, 500);
+    };
     updateStyle(
-      this,
+      element,
+      `.${this.id}`,
       contextualStyle,
       `
       ${this.toggle ? "background: #fff;" : "background: #ee9999;"}
@@ -180,13 +194,6 @@ var Toolbar = class {
       border-radius: 10px;
       `
     );
-    const element = updateElement(this, [], `<p>${this.content}</p>`);
-    element.onclick = () => {
-      setTimeout(() => {
-        this.toggle = !this.toggle;
-        this.render(contextualStyle);
-      }, 500);
-    };
     return element;
   }
 };
@@ -227,163 +234,6 @@ var FileSelect = class {
   render(_contextualStyle) {
     const modalWidth = 400;
     const modalPadding = 40;
-    updateStyle(
-      "body",
-      null,
-      `
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f0f0f0;
-      `
-    );
-    updateStyle(
-      ".modal",
-      null,
-      `
-      position: relative;
-      width: ${modalWidth}px;
-      padding: ${modalPadding}px;
-      background: white;
-      border-radius: 30px;
-      box-shadow: 0 4px 10px #00000010;
-      text-align: center;
-      `
-    );
-    updateStyle(
-      ".modal h2",
-      null,
-      `
-      font-size: 1.5rem;
-      color: #333;
-      `
-    );
-    updateStyle(
-      ".modal p",
-      null,
-      `
-      font-size: 1rem;
-      color: #666;
-      margin-top: 8px;
-      margin-bottom: 20px;
-      `
-    );
-    updateStyle(
-      '.modal input[type="file"]',
-      null,
-      `
-      display: none;
-      `
-    );
-    updateStyle(
-      ".modal label",
-      null,
-      `
-      display: inline-block;
-      font-size: 1rem;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      `
-    );
-    updateStyle(
-      ".border-svg",
-      null,
-      `
-      position: absolute;
-      transform: translate(-50%, 0%);
-      top: 0px;
-      pointer-events: none;
-      `
-    );
-    updateStyle(
-      ".border-svg rect",
-      null,
-      `
-      height: calc(100% - 20px);
-      width: calc(100% - 20px);
-      stroke-dashoffset: 20;
-      stroke: #f5f5f5;
-      transition: stroke-dashoffset 0.2s ease,
-        stroke 0.2s ease;
-      `
-    );
-    updateStyle(
-      ".modal:hover .border-svg rect",
-      null,
-      `
-      stroke-dashoffset: 0;
-      stroke: #e0e0e0;
-      `
-    );
-    updateStyle(
-      ".selected-file",
-      null,
-      `
-        display: inline-block;
-        padding: 10px 15px 10px 15px;
-        background: #000000;
-        border-radius: 9px;         
-        text-align: center;
-      `
-    );
-    updateStyle(
-      ".selected-file:hover",
-      null,
-      `
-        background-color: #505050;
-      `
-    );
-    updateStyle(
-      ".selected-file-box",
-      null,
-      `
-        display: flex; 
-        align-items: center;
-        justify-content: center;
-      `
-    );
-    updateStyle(
-      ".selected-file-text",
-      null,
-      `
-        margin: 0px 10px 0px 10px;
-        color: #f0f0f0;    
-      `
-    );
-    updateStyle(
-      ".selected-file-cancel-icon",
-      null,
-      `
-        stroke: #a0a0a0;
-        cursor: pointer;
-      `
-    );
-    updateStyle(
-      ".selected-file-cancel-icon:hover",
-      null,
-      `
-        stroke: #fefefe;
-      `
-    );
-    updateStyle(
-      ".selected-file-proceed-icon",
-      null,
-      `
-        stroke: #a0a0a0;
-        cursor: pointer;
-      `
-    );
-    updateStyle(
-      ".selected-file-proceed-icon:hover",
-      null,
-      `
-        stroke: #fefefe;
-      `
-    );
     const element = updateElement(
       this,
       [],
@@ -444,6 +294,180 @@ var FileSelect = class {
         this.render(null);
       });
     }
+    updateStyle(
+      element,
+      "body",
+      null,
+      `
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      `
+    );
+    updateStyle(
+      element,
+      ".modal",
+      null,
+      `
+      position: relative;
+      width: ${modalWidth}px;
+      padding: ${modalPadding}px;
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px #00000010;
+      text-align: center;
+      `
+    );
+    updateStyle(
+      element,
+      ".modal h2",
+      null,
+      `
+      font-size: 1.5rem;
+      color: #333;
+      `
+    );
+    updateStyle(
+      element,
+      ".modal p",
+      null,
+      `
+      font-size: 1rem;
+      color: #666;
+      margin-top: 8px;
+      margin-bottom: 20px;
+      `
+    );
+    updateStyle(
+      element,
+      '.modal input[type="file"]',
+      null,
+      `
+      display: none;
+      `
+    );
+    updateStyle(
+      element,
+      ".modal label",
+      null,
+      `
+      display: inline-block;
+      font-size: 1rem;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      `
+    );
+    updateStyle(
+      element,
+      ".border-svg",
+      null,
+      `
+      position: absolute;
+      transform: translate(-50%, 0%);
+      top: 0px;
+      pointer-events: none;
+      `
+    );
+    updateStyle(
+      element,
+      ".border-svg rect",
+      null,
+      `
+      height: calc(100% - 20px);
+      width: calc(100% - 20px);
+      stroke-dashoffset: 20;
+      stroke: #f5f5f5;
+      transition: stroke-dashoffset 0.2s ease,
+        stroke 0.2s ease;
+      `
+    );
+    updateStyle(
+      element,
+      ".modal:hover .border-svg rect",
+      null,
+      `
+      stroke-dashoffset: 0;
+      stroke: #e0e0e0;
+      `
+    );
+    updateStyle(
+      element,
+      ".selected-file",
+      null,
+      `
+        display: inline-block;
+        padding: 10px 15px 10px 15px;
+        background: #000000;
+        border-radius: 9px;         
+        text-align: center;
+      `
+    );
+    updateStyle(
+      element,
+      ".selected-file:hover",
+      null,
+      `
+        background-color: #505050;
+      `
+    );
+    updateStyle(
+      element,
+      ".selected-file-box",
+      null,
+      `
+        display: flex; 
+        align-items: center;
+        justify-content: center;
+      `
+    );
+    updateStyle(
+      element,
+      ".selected-file-text",
+      null,
+      `
+        margin: 0px 10px 0px 10px;
+        color: #f0f0f0;    
+      `
+    );
+    updateStyle(
+      element,
+      ".selected-file-cancel-icon",
+      null,
+      `
+        stroke: #a0a0a0;
+        cursor: pointer;
+      `
+    );
+    updateStyle(
+      element,
+      ".selected-file-cancel-icon:hover",
+      null,
+      `
+        stroke: #fefefe;
+      `
+    );
+    updateStyle(
+      element,
+      ".selected-file-proceed-icon",
+      null,
+      `
+        stroke: #a0a0a0;
+        cursor: pointer;
+      `
+    );
+    updateStyle(
+      element,
+      ".selected-file-proceed-icon:hover",
+      null,
+      `
+        stroke: #fefefe;
+      `
+    );
     return element;
   }
 };

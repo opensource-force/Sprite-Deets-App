@@ -40,167 +40,6 @@ export class FileSelect implements Component {
     const modalWidth = 400;
     const modalPadding = 40;
 
-    updateStyle(
-      "body",
-      null,
-      `
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f0f0f0;
-      `,
-    );
-    updateStyle(
-      ".modal",
-      null,
-      `
-      position: relative;
-      width: ${modalWidth}px;
-      padding: ${modalPadding}px;
-      background: white;
-      border-radius: 30px;
-      box-shadow: 0 4px 10px #00000010;
-      text-align: center;
-      `,
-    );
-    updateStyle(
-      ".modal h2",
-      null,
-      `
-      font-size: 1.5rem;
-      color: #333;
-      `,
-    );
-    updateStyle(
-      ".modal p",
-      null,
-      `
-      font-size: 1rem;
-      color: #666;
-      margin-top: 8px;
-      margin-bottom: 20px;
-      `,
-    );
-    updateStyle(
-      '.modal input[type="file"]',
-      null,
-      `
-      display: none;
-      `,
-    );
-    updateStyle(
-      ".modal label",
-      null,
-      `
-      display: inline-block;
-      font-size: 1rem;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      `,
-    );
-    updateStyle(
-      ".border-svg",
-      null,
-      `
-      position: absolute;
-      transform: translate(-50%, 0%);
-      top: 0px;
-      pointer-events: none;
-      `,
-    );
-    updateStyle(
-      ".border-svg rect",
-      null,
-      `
-      height: calc(100% - 20px);
-      width: calc(100% - 20px);
-      stroke-dashoffset: 20;
-      stroke: #f5f5f5;
-      transition: stroke-dashoffset 0.2s ease,
-        stroke 0.2s ease;
-      `,
-    );
-    updateStyle(
-      ".modal:hover .border-svg rect",
-      null,
-      `
-      stroke-dashoffset: 0;
-      stroke: #e0e0e0;
-      `,
-    );
-
-    updateStyle(
-      ".selected-file",
-      null,
-      `
-        display: inline-block;
-        padding: 10px 15px 10px 15px;
-        background: #000000;
-        border-radius: 9px;         
-        text-align: center;
-      `,
-    );
-
-    updateStyle(
-      ".selected-file:hover",
-      null,
-      `
-        background-color: #505050;
-      `,
-    );
-
-    updateStyle(
-      ".selected-file-box",
-      null,
-      `
-        display: flex; 
-        align-items: center;
-        justify-content: center;
-      `,
-    );
-    updateStyle(
-      ".selected-file-text",
-      null,
-      `
-        margin: 0px 10px 0px 10px;
-        color: #f0f0f0;    
-      `,
-    );
-    updateStyle(
-      ".selected-file-cancel-icon",
-      null,
-      `
-        stroke: #a0a0a0;
-        cursor: pointer;
-      `,
-    );
-    updateStyle(
-      ".selected-file-cancel-icon:hover",
-      null,
-      `
-        stroke: #fefefe;
-      `,
-    );
-    updateStyle(
-      ".selected-file-proceed-icon",
-      null,
-      `
-        stroke: #a0a0a0;
-        cursor: pointer;
-      `,
-    );
-    updateStyle(
-      ".selected-file-proceed-icon:hover",
-      null,
-      `
-        stroke: #fefefe;
-      `,
-    );
-
     const element = updateElement(
       this,
       [],
@@ -270,6 +109,183 @@ export class FileSelect implements Component {
         this.render(null);
       });
     }
+    updateStyle(
+      element,
+      "body",
+      null,
+      `
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      `,
+    );
+    updateStyle(
+      element,
+      ".modal",
+      null,
+      `
+      position: relative;
+      width: ${modalWidth}px;
+      padding: ${modalPadding}px;
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px #00000010;
+      text-align: center;
+      `,
+    );
+    updateStyle(
+      element,
+      ".modal h2",
+      null,
+      `
+      font-size: 1.5rem;
+      color: #333;
+      `,
+    );
+    updateStyle(
+      element,
+      ".modal p",
+      null,
+      `
+      font-size: 1rem;
+      color: #666;
+      margin-top: 8px;
+      margin-bottom: 20px;
+      `,
+    );
+    updateStyle(
+      element,
+      '.modal input[type="file"]',
+      null,
+      `
+      display: none;
+      `,
+    );
+    updateStyle(
+      element,
+      ".modal label",
+      null,
+      `
+      display: inline-block;
+      font-size: 1rem;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      `,
+    );
+    updateStyle(
+      element,
+      ".border-svg",
+      null,
+      `
+      position: absolute;
+      transform: translate(-50%, 0%);
+      top: 0px;
+      pointer-events: none;
+      `,
+    );
+    updateStyle(
+      element,
+      ".border-svg rect",
+      null,
+      `
+      height: calc(100% - 20px);
+      width: calc(100% - 20px);
+      stroke-dashoffset: 20;
+      stroke: #f5f5f5;
+      transition: stroke-dashoffset 0.2s ease,
+        stroke 0.2s ease;
+      `,
+    );
+    updateStyle(
+      element,
+      ".modal:hover .border-svg rect",
+      null,
+      `
+      stroke-dashoffset: 0;
+      stroke: #e0e0e0;
+      `,
+    );
+
+    updateStyle(
+      element,
+      ".selected-file",
+      null,
+      `
+        display: inline-block;
+        padding: 10px 15px 10px 15px;
+        background: #000000;
+        border-radius: 9px;         
+        text-align: center;
+      `,
+    );
+
+    updateStyle(
+      element,
+      ".selected-file:hover",
+      null,
+      `
+        background-color: #505050;
+      `,
+    );
+
+    updateStyle(
+      element,
+      ".selected-file-box",
+      null,
+      `
+        display: flex; 
+        align-items: center;
+        justify-content: center;
+      `,
+    );
+    updateStyle(
+      element,
+      ".selected-file-text",
+      null,
+      `
+        margin: 0px 10px 0px 10px;
+        color: #f0f0f0;    
+      `,
+    );
+    updateStyle(
+      element,
+      ".selected-file-cancel-icon",
+      null,
+      `
+        stroke: #a0a0a0;
+        cursor: pointer;
+      `,
+    );
+    updateStyle(
+      element,
+      ".selected-file-cancel-icon:hover",
+      null,
+      `
+        stroke: #fefefe;
+      `,
+    );
+    updateStyle(
+      element,
+      ".selected-file-proceed-icon",
+      null,
+      `
+        stroke: #a0a0a0;
+        cursor: pointer;
+      `,
+    );
+    updateStyle(
+      element,
+      ".selected-file-proceed-icon:hover",
+      null,
+      `
+        stroke: #fefefe;
+      `,
+    );
     return element;
   }
 }
