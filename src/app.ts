@@ -16,18 +16,7 @@ const init = () => {
   // `);
 };
 
-const app = document.getElementById("app");
-
-if (app) {
-  app.appendChild(
-    new AppComponent(
-      new Toolbar("left", "Toolbar"),
-      new Toolbar("right", "Toolbar"),
-      new Timeline("Timeline"),
-      new SpriteCanvas("Canvas"),
-    ).render(null),
-  );
-}
+new AppComponent().render(null);
 
 if (document.readyState !== "loading") {
   init();

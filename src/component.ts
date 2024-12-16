@@ -1,22 +1,22 @@
 export interface Component {
   id: string;
-  render(style: string | null): HTMLElement;
+  render(contextualStyle: string | null): HTMLElement;
 }
 
 export function updateStyle(
-  component: Component,
+  id: string,
   contextualStyle: string | null,
   style: string,
 ) {
-  const styleId = `${component.id}-style`;
+  const styleId = `${id}-style`;
   let localStyle = document.getElementById(styleId) as HTMLStyleElement;
   if (!localStyle) {
     localStyle = document.createElement("style");
     localStyle.id = styleId;
-    document.head.appendChild(localStyle);
+    document.body.appendChild(localStyle);
   }
   localStyle.textContent = `
-        .${component.id} {
+        ${id} {
             ${contextualStyle === null ? "" : contextualStyle}
             ${style}
         }
@@ -31,20 +31,20 @@ export function updateElement(
   const id = `${component.id}`;
   let element = document.getElementById(id);
   if (element) {
-    children.forEach((child) => {
-      element?.removeChild(child);
-    });
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
   } else {
     element = document.createElement("div");
     element.id = id;
     element.className = id;
-    document.head.appendChild(element);
+    document.body.appendChild(element);
+  }
+  if (innerHTML) {
+    element.innerHTML = innerHTML;
   }
   children.forEach((child) => {
     element.append(child);
   });
-  if (innerHTML) {
-    element.innerHTML = innerHTML;
-  }
   return element;
 }

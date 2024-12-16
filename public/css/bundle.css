@@ -2,3 +2,7 @@
 body {
   background-color: lightslategray;
 }
+* {
+  margin: 0;
+  padding: 0;
+}
