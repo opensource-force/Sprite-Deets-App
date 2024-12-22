@@ -1,9 +1,9 @@
 import {
   Component,
+  StateUpdate,
   Store,
   Style,
   StyleItem,
-  Transaction,
 } from "../component.ts";
 import { SpriteCanvas } from "./sprite-canvas.ts";
 import { Timeline } from "./timeline.ts";
@@ -23,7 +23,7 @@ export class SpriteEditor implements Component {
     this.canvas = new SpriteCanvas("Canvas");
   }
 
-  needsRender(_state: Transaction): boolean {
+  needsRender(_state: StateUpdate): boolean {
     return true;
   }
 

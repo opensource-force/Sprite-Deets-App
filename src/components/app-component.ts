@@ -1,9 +1,9 @@
 import {
   Component,
+  StateUpdate,
   Store,
   Style,
   StyleItem,
-  Transaction,
 } from "../component.ts";
 import { FileSelect } from "./file-select.ts";
 import { SpriteCanvas } from "./sprite-canvas.ts";
@@ -13,7 +13,7 @@ import { Toolbar } from "./toolbar.ts";
 
 export class AppComponent implements Component {
   id = `app-component`;
-  needsRender(_state: Transaction): boolean {
+  needsRender(_state: StateUpdate): boolean {
     return true;
   }
   render(
