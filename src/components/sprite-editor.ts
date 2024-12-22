@@ -1,22 +1,42 @@
 import { Component, updateElement, updateStyle } from "../component.ts";
+import { Toolbar, ToolbarState } from "./toolbar.ts";
+
+class EditorState {
+  leftToolbar = new ToolbarState();
+  rightToolbar = new ToolbarState();
+}
 
 export class SpriteEditor implements Component {
-  leftToolbar: Component;
-  rightToolbar: Component;
+  leftToolbar: Toolbar;
+  rightToolbar: Toolbar;
   bottomToolbar: Component;
   canvas: Component;
   id = `sprite-editor`;
+  state: EditorState;
 
   constructor(
-    leftToolbar: Component,
-    rightToolbar: Component,
     bottomToolbar: Component,
     canvas: Component,
   ) {
-    this.leftToolbar = leftToolbar;
-    this.rightToolbar = rightToolbar;
     this.bottomToolbar = bottomToolbar;
     this.canvas = canvas;
+    this.state = new EditorState();
+    this.rightToolbar = new Toolbar(
+      "right",
+      "Toolbar",
+      this.state.rightToolbar,
+      () => {
+        this.leftToolbar.toggle();
+      },
+    );
+    this.leftToolbar = new Toolbar(
+      "left",
+      "Toolbar",
+      this.state.leftToolbar,
+      () => {
+        this.rightToolbar.toggle();
+      },
+    );
   }
 
   render(contextualStyle: string | null): HTMLElement {

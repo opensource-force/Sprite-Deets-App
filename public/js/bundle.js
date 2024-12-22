@@ -84,18 +84,83 @@ var SpriteCanvas = class {
   }
 };
 
+// src/components/toolbar.ts
+var ToolbarState = class {
+  constructor() {
+    __publicField(this, "toggle", false);
+  }
+};
+var Toolbar = class {
+  constructor(position, content, state, onClick) {
+    __publicField(this, "position");
+    __publicField(this, "content");
+    __publicField(this, "id");
+    __publicField(this, "state");
+    __publicField(this, "onClick");
+    this.id = `toolbar-${position}`;
+    this.position = position;
+    this.content = content;
+    this.state = state;
+    this.onClick = onClick;
+  }
+  render(contextualStyle) {
+    const element = updateElement(this, [], `<p>${this.content}</p>`);
+    element.onclick = this.onClick;
+    updateStyle(
+      element,
+      `.${this.id}`,
+      contextualStyle,
+      `
+      ${this.state.toggle ? "background: #fff;" : "background: #ee9999;"}
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      border-radius: 10px;
+      `
+    );
+    return element;
+  }
+  toggle() {
+    this.state.toggle = !this.state.toggle;
+    this.render(null);
+  }
+};
+
 // src/components/sprite-editor.ts
+var EditorState = class {
+  constructor() {
+    __publicField(this, "leftToolbar", new ToolbarState());
+    __publicField(this, "rightToolbar", new ToolbarState());
+  }
+};
 var SpriteEditor = class {
-  constructor(leftToolbar, rightToolbar, bottomToolbar, canvas) {
+  constructor(bottomToolbar, canvas) {
     __publicField(this, "leftToolbar");
     __publicField(this, "rightToolbar");
     __publicField(this, "bottomToolbar");
     __publicField(this, "canvas");
     __publicField(this, "id", `sprite-editor`);
-    this.leftToolbar = leftToolbar;
-    this.rightToolbar = rightToolbar;
+    __publicField(this, "state");
     this.bottomToolbar = bottomToolbar;
     this.canvas = canvas;
+    this.state = new EditorState();
+    this.rightToolbar = new Toolbar(
+      "right",
+      "Toolbar",
+      this.state.rightToolbar,
+      () => {
+        this.leftToolbar.toggle();
+      }
+    );
+    this.leftToolbar = new Toolbar(
+      "left",
+      "Toolbar",
+      this.state.leftToolbar,
+      () => {
+        this.rightToolbar.toggle();
+      }
+    );
   }
   render(contextualStyle) {
     const element = updateElement(
@@ -161,48 +226,11 @@ var Timeline = class {
   }
 };
 
-// src/components/toolbar.ts
-var Toolbar = class {
-  constructor(position, content) {
-    __publicField(this, "position");
-    __publicField(this, "content");
-    __publicField(this, "id");
-    __publicField(this, "toggle");
-    this.id = `toolbar-${position}`;
-    this.position = position;
-    this.content = content;
-    this.toggle = false;
-  }
-  render(contextualStyle) {
-    const element = updateElement(this, [], `<p>${this.content}</p>`);
-    element.onclick = () => {
-      setTimeout(() => {
-        this.toggle = !this.toggle;
-        this.render(contextualStyle);
-      }, 500);
-    };
-    updateStyle(
-      element,
-      `.${this.id}`,
-      contextualStyle,
-      `
-      ${this.toggle ? "background: #fff;" : "background: #ee9999;"}
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1rem;
-      border-radius: 10px;
-      `
-    );
-    return element;
-  }
-};
-
 // src/components/app-component.ts
 var AppComponent = class {
   constructor() {
     __publicField(this, "id", `app-component`);
-    __publicField(this, "selectingFile", true);
+    __publicField(this, "selectingFile", false);
   }
   render(_contextualStyle) {
     let elements;
@@ -214,8 +242,6 @@ var AppComponent = class {
     } else {
       elements = [
         new SpriteEditor(
-          new Toolbar("left", "Toolbar"),
-          new Toolbar("right", "Toolbar"),
           new Timeline("Timeline"),
           new SpriteCanvas("Canvas")
         ).render(null)

@@ -6,7 +6,7 @@ import { Toolbar } from "./toolbar.ts";
 
 export class AppComponent implements Component {
   id = `app-component`;
-  selectingFile = true;
+  selectingFile = false;
   render(_contextualStyle: string | null): HTMLElement {
     let elements: HTMLElement[];
     if (this.selectingFile) {
@@ -17,8 +17,6 @@ export class AppComponent implements Component {
     } else {
       elements = [
         new SpriteEditor(
-          new Toolbar("left", "Toolbar"),
-          new Toolbar("right", "Toolbar"),
           new Timeline("Timeline"),
           new SpriteCanvas("Canvas"),
         ).render(null),

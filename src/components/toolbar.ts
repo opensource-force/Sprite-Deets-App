@@ -1,32 +1,38 @@
 import { Component, updateElement, updateStyle } from "../component.ts";
 
+export class ToolbarState {
+  toggle = false;
+}
+
 export class Toolbar implements Component {
   private position: "left" | "right";
   private content: string;
   id: string;
-  toggle: boolean;
+  state: ToolbarState;
+  onClick: () => void;
 
-  constructor(position: "left" | "right", content: string) {
+  constructor(
+    position: "left" | "right",
+    content: string,
+    state: ToolbarState,
+    onClick: () => void,
+  ) {
     this.id = `toolbar-${position}`;
     this.position = position;
     this.content = content;
-    this.toggle = false;
+    this.state = state;
+    this.onClick = onClick;
   }
 
   render(contextualStyle: string | null): HTMLElement {
     const element = updateElement(this, [], `<p>${this.content}</p>`);
-    element.onclick = () => {
-      setTimeout(() => {
-        this.toggle = !this.toggle;
-        this.render(contextualStyle);
-      }, 500);
-    };
+    element.onclick = this.onClick;
     updateStyle(
       element,
       `.${this.id}`,
       contextualStyle,
       `
-      ${this.toggle ? "background: #fff;" : "background: #ee9999;"}
+      ${this.state.toggle ? "background: #fff;" : "background: #ee9999;"}
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -35,5 +41,10 @@ export class Toolbar implements Component {
       `,
     );
     return element;
+  }
+
+  toggle(): void {
+    this.state.toggle = !this.state.toggle;
+    this.render(null);
   }
 }
