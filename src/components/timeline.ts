@@ -1,9 +1,9 @@
 import {
   Component,
+  StateUpdate,
   Store,
   Style,
   StyleItem,
-  Transaction,
 } from "../component.ts";
 
 export class Timeline implements Component {
@@ -14,7 +14,7 @@ export class Timeline implements Component {
     this.content = content;
   }
 
-  needsRender(_state: Transaction): boolean {
+  needsRender(_state: StateUpdate): boolean {
     return true;
   }
 

@@ -1,14 +1,14 @@
 import {
   Component,
+  StateUpdate,
   Store,
   Style,
   StyleItem,
-  Transaction,
 } from "../component.ts";
 
 export class FileSelect implements Component {
   id = `file-select`;
-  needsRender(_state: Transaction): boolean {
+  needsRender(_state: StateUpdate): boolean {
     return true;
   }
   render(

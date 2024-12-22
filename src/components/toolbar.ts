@@ -1,9 +1,9 @@
 import {
   Component,
+  StateUpdate,
   Store,
   Style,
   StyleItem,
-  Transaction,
 } from "../component.ts";
 
 export class Toolbar implements Component {
@@ -19,7 +19,7 @@ export class Toolbar implements Component {
     this.toggle = false;
   }
 
-  needsRender(_state: Transaction): boolean {
+  needsRender(_state: StateUpdate): boolean {
     return true;
   }
 

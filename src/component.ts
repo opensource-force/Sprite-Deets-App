@@ -1,6 +1,9 @@
 export interface Component {
   id: string;
-  needsRender(state: Transaction): boolean;
+  /// Returns true if the views associated with this component should be updated based on the state update.
+  needsRender(stateUpdate: StateUpdate): boolean;
+  /// Customize the HTMLElement & Style associated with this Component
+  /// Returns child components, if any
   render(
     store: Store,
     element: HTMLElement,
@@ -8,7 +11,7 @@ export interface Component {
   ): Component[];
 }
 
-export class Transaction {
+export class StateUpdate {
   previousState: AppState;
   currentState: AppState;
   constructor(previousState: AppState, currentState: AppState) {
@@ -99,7 +102,7 @@ export class Store {
     let needsRender = false;
     if (this.previousState) {
       needsRender = component.needsRender(
-        new Transaction(this.previousState, this.state),
+        new StateUpdate(this.previousState, this.state),
       );
     } else {
       needsRender = true;
