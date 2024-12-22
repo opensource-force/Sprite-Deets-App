@@ -1,4 +1,10 @@
-import { Component, updateElement, updateStyle } from "../component.ts";
+import {
+  Component,
+  Store,
+  Style,
+  StyleItem,
+  Transaction,
+} from "../component.ts";
 
 export class SpriteCanvas implements Component {
   private content: string;
@@ -8,22 +14,33 @@ export class SpriteCanvas implements Component {
     this.content = content;
   }
 
-  render(contextualStyle: string | null): HTMLElement {
-    const element = updateElement(this, [], `<p>${this.content}</p>`);
-    updateStyle(
-      element,
-      `.${this.id}`,
-      contextualStyle,
-      `
-      height: auto;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1rem;
-      border-radius: 10px;
-      `,
+  needsRender(_state: Transaction): boolean {
+    return true;
+  }
+
+  render(
+    _store: Store,
+    element: HTMLElement,
+    style: Style,
+  ): Component[] {
+    element.innerHTML = `<p>${this.content}</p>`;
+    style.push(
+      [
+        new StyleItem(
+          `.${this.id}`,
+          `
+        grid-area: canvas;
+        height: auto;
+        background: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        border-radius: 10px;
+        `,
+        ),
+      ],
     );
-    return element;
+    return [];
   }
 }
