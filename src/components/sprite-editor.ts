@@ -1,56 +1,59 @@
-import { Component, updateElement, updateStyle } from "../component.ts";
+import {
+  Component,
+  Store,
+  Style,
+  StyleItem,
+  Transaction,
+} from "../component.ts";
+import { SpriteCanvas } from "./sprite-canvas.ts";
+import { Timeline } from "./timeline.ts";
+import { Toolbar } from "./toolbar.ts";
 
 export class SpriteEditor implements Component {
-  leftToolbar: Component;
-  rightToolbar: Component;
-  bottomToolbar: Component;
-  canvas: Component;
+  leftToolbar: Toolbar;
+  rightToolbar: Toolbar;
+  bottomToolbar: Timeline;
+  canvas: SpriteCanvas;
   id = `sprite-editor`;
 
-  constructor(
-    leftToolbar: Component,
-    rightToolbar: Component,
-    bottomToolbar: Component,
-    canvas: Component,
-  ) {
-    this.leftToolbar = leftToolbar;
-    this.rightToolbar = rightToolbar;
-    this.bottomToolbar = bottomToolbar;
-    this.canvas = canvas;
+  constructor() {
+    this.leftToolbar = new Toolbar("left", "Toolbar");
+    this.rightToolbar = new Toolbar("right", "Toolbar");
+    this.bottomToolbar = new Timeline("Timeline");
+    this.canvas = new SpriteCanvas("Canvas");
   }
 
-  render(contextualStyle: string | null): HTMLElement {
-    const element = updateElement(
-      this,
+  needsRender(_state: Transaction): boolean {
+    return true;
+  }
+
+  render(
+    _store: Store,
+    _element: HTMLElement,
+    style: Style,
+  ): Component[] {
+    style.push(
       [
-        this.leftToolbar.render(`
-          grid-area: left;
-          margin-right: 0.5rem;
-          `),
-        this.canvas.render("grid-area: canvas;"),
-        this.rightToolbar.render(`
-          grid-area: right;
-          margin-left: 0.5rem;
-          `),
-        this.bottomToolbar.render("grid-column: span 3;"),
+        new StyleItem(
+          `.${this.id}`,
+          `
+          display: grid;
+          grid-template-areas: 
+              "left canvas right";
+          grid-template-columns: 1fr 3fr 1fr;
+          grid-template-rows: 80% auto;
+          height: calc(100vh - 1rem);
+          width: 100%;
+          border-radius: 10px;
+          `,
+        ),
       ],
-      null,
     );
-    updateStyle(
-      element,
-      `.${this.id}`,
-      contextualStyle,
-      `
-    display: grid;
-    grid-template-areas: 
-        "left canvas right";
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: 80% auto;
-    height: calc(100vh - 1rem);
-    width: 100%;
-    border-radius: 10px;
-    `,
-    );
-    return element;
+    return [
+      this.leftToolbar,
+      this.canvas,
+      this.rightToolbar,
+      this.bottomToolbar,
+    ];
   }
 }

@@ -1,5 +1,6 @@
 import { Image } from "./image/image.ts";
 import { AppComponent } from "./components/app-component.ts";
+import { AppState, Store } from "./component.ts";
 
 const init = () => {
   // handle all your on load setup here
@@ -13,7 +14,8 @@ const init = () => {
   // `);
 };
 
-new AppComponent().render(null);
+const store = new Store(new AppState(), new AppComponent());
+store.update();
 
 if (document.readyState !== "loading") {
   init();
