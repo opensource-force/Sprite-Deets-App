@@ -1,6 +1,5 @@
 import { serveDir } from "https://deno.land/std/http/file_server.ts";
 import * as esbuild from "https://deno.land/x/esbuild@v0.19.12/mod.js";
-import process from "node:process";
 
 let bytes: Uint8Array;
 

@@ -1,9 +1,6 @@
-import {
-  ComponentBase,
-} from "../component.ts";
+import { ComponentBase } from "../component.ts";
 
 export class Timeline extends ComponentBase {
-
   constructor() {
     super();
     this.id = `timeline`;

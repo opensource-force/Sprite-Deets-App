@@ -1,6 +1,4 @@
-import {
-  ComponentBase,
-} from "../component.ts";
+import { ComponentBase } from "../component.ts";
 import { Controller } from "../controller.ts";
 import { SpriteDetailsController } from "../controllers/sprite-details-controller.ts";
 
@@ -10,7 +8,9 @@ export class SpriteCanvas extends ComponentBase {
   constructor() {
     super();
     this.id = `sprite-canvas`;
-    this.spriteDetailsController = Controller.getController<SpriteDetailsController>(SpriteDetailsController.typeName);
+    this.spriteDetailsController = Controller.getController<
+      SpriteDetailsController
+    >(SpriteDetailsController.typeName);
   }
 
   override render(): void {
@@ -27,9 +27,8 @@ export class SpriteCanvas extends ComponentBase {
       padding: 1rem;
       border-radius: 10px;
     `;
-    
+
     element.appendChild(canvas);
- 
   }
 
   configureCanvas(): HTMLCanvasElement {

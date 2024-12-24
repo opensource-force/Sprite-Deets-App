@@ -1,18 +1,14 @@
-import {
-  ComponentBase,
-
-} from "../component.ts";
+import { ComponentBase } from "../component.ts";
 
 export class FileSelect extends ComponentBase {
-
   constructor() {
     super();
     this.id = `file-select`;
   }
 
   override render(): void {
-    const modalWidth = 400;
-    const modalPadding = 40;
+    //const modalWidth = 400;
+    //const modalPadding = 40;
 
     // element.innerHTML = `
     //     <div class="modal" position="relative">
@@ -167,7 +163,7 @@ export class FileSelect extends ComponentBase {
     //           display: inline-block;
     //           padding: 10px 15px 10px 15px;
     //           background: #000000;
-    //           border-radius: 9px;         
+    //           border-radius: 9px;
     //           text-align: center;
     //         `,
     //     ),
@@ -180,7 +176,7 @@ export class FileSelect extends ComponentBase {
     //     new StyleItem(
     //       ".selected-file-box",
     //       `
-    //           display: flex; 
+    //           display: flex;
     //           align-items: center;
     //           justify-content: center;
     //         `,
@@ -189,7 +185,7 @@ export class FileSelect extends ComponentBase {
     //       ".selected-file-text",
     //       `
     //           margin: 0px 10px 0px 10px;
-    //           color: #f0f0f0;    
+    //           color: #f0f0f0;
     //         `,
     //     ),
     //     new StyleItem(

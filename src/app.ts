@@ -3,7 +3,6 @@ import { Controller } from "./controller.ts";
 import { AppController } from "./controllers/app-controller.ts";
 import { SpriteDetailsController } from "./controllers/sprite-details-controller.ts";
 
-
 const init = () => {
   Controller.registerController(
     AppController.typeName,

@@ -17,6 +17,6 @@ export class TopBar extends ComponentBase {
         padding: 1rem;
         border-radius: 10px;
         background: #ffffff;
-    `
+    `;
   }
 }

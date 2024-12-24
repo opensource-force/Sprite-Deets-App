@@ -34,11 +34,16 @@ export abstract class Controller {
     }
   }
 
-  public static registerController<T extends Controller>(type: string, controller: T): void {
+  public static registerController<T extends Controller>(
+    type: string,
+    controller: T,
+  ): void {
     this.controllerMap.set(type, controller);
   }
 
-  public static getController<T>(type: string): T extends Controller ? T : never {
+  public static getController<T>(
+    type: string,
+  ): T extends Controller ? T : never {
     return this.controllerMap.get(type) as T extends Controller ? T : never;
   }
 }

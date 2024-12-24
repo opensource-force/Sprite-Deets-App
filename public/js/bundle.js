@@ -37,8 +37,6 @@ var FileSelect = class extends ComponentBase {
     this.id = `file-select`;
   }
   render() {
-    const modalWidth = 400;
-    const modalPadding = 40;
   }
 };
 
