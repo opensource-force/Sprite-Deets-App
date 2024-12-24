@@ -1,12 +1,17 @@
 export interface Component {
   id: string;
 
+  notify(event: string): void;
   render(): void;
 }
 
 export abstract class ComponentBase implements Component {
   id: string = `component-base`;
   class: string = `component-base`;
+
+  public notify(event: string): void {
+    console.error(`Event ${event} not implemented`);
+  }
 
   public render(): void {
   }

@@ -14,15 +14,18 @@ export class SpriteDetailsController extends Controller {
   public static typeName: string = "SpriteDetailsController";
   spriteCanvasData: SpriteCanvasData = new SpriteCanvasData();
 
+  public static readonly SCALED_PIXEL_SIZE_CHANGED_EVENT: string = "SCALED_PIXEL_SIZE_CHANGED_EVENT";
+
   constructor() {
     super();
   }
 
-  public updatePixelSizePx(newSize: number) {
+  public updateScaledPixelSize(newSize: number) {
     this.spriteCanvasData.pixelSizePx = newSize;
+    this.postEvent(SpriteDetailsController.SCALED_PIXEL_SIZE_CHANGED_EVENT);
   }
 
-  public getPixelSizePx(): number {
+  public getScaledPixelSize(): number {
     return this.spriteCanvasData.pixelSizePx;
   }
 }
