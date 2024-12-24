@@ -1,12 +1,12 @@
 import { Controller } from "../controller.ts";
 
 export class SpriteCanvasData {
-  private _pixelSizePx: number = 32;
-  public get pixelSizePx(): number {
-    return this._pixelSizePx;
+  private _scaledPixelSize: number = 32;
+  public get scaledPixelSize(): number {
+    return this._scaledPixelSize;
   }
-  public set pixelSizePx(v: number) {
-    this._pixelSizePx = v;
+  public set scaledPixelSize(v: number) {
+    this._scaledPixelSize = v;
   }
 }
 
@@ -21,11 +21,11 @@ export class SpriteDetailsController extends Controller {
   }
 
   public updateScaledPixelSize(newSize: number) {
-    this.spriteCanvasData.pixelSizePx = newSize;
+    this.spriteCanvasData.scaledPixelSize = newSize;
     this.postEvent(SpriteDetailsController.SCALED_PIXEL_SIZE_CHANGED_EVENT);
   }
 
   public getScaledPixelSize(): number {
-    return this.spriteCanvasData.pixelSizePx;
+    return this.spriteCanvasData.scaledPixelSize;
   }
 }
