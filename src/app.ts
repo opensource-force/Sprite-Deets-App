@@ -16,4 +16,8 @@ const init = () => {
   new AppComponent().render();
 };
 
-init();
+if (document.readyState !== "loading") {
+  init();
+} else {
+  self.addEventListener("DOMContentLoaded", init);
+}
