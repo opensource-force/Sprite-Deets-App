@@ -1,6 +1,6 @@
-import { ComponentBase } from "../component.ts";
+import { Component } from "../component.ts";
 
-export class TopBar extends ComponentBase {
+export class TopBar extends Component {
   override id = `top-bar`;
 
   override render(): void {

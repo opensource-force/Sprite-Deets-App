@@ -1,8 +1,8 @@
-import { ComponentBase } from "../component.ts";
+import { Component } from "../component.ts";
 import { Controller } from "../controller.ts";
 import { SpriteDetailsController } from "../controllers/sprite-details-controller.ts";
 
-export class SpriteCanvas extends ComponentBase {
+export class SpriteCanvas extends Component {
   private spriteDetailsController: SpriteDetailsController;
 
   constructor() {

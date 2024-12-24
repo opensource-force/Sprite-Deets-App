@@ -1,9 +1,10 @@
-import { ComponentBase } from "../component.ts";
+import { Component } from "../component.ts";
 
-export class Toolbar extends ComponentBase {
+export class Toolbar extends Component {
   constructor() {
     super();
     this.id = `toolbar`;
+    this.class = `toolbar-class`;
   }
 
   override render(): void {

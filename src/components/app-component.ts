@@ -1,9 +1,9 @@
-import { ComponentBase } from "../component.ts";
+import { Component } from "../component.ts";
 import { FileSelect } from "./file-select.ts";
 import { SpriteEditor } from "./sprite-editor.ts";
 import { TopBar } from "./top-bar.ts";
 
-export class AppComponent extends ComponentBase {
+export class AppComponent extends Component {
   // Components
   fileSelect: FileSelect = new FileSelect();
   spriteEditor: SpriteEditor = new SpriteEditor();
@@ -15,13 +15,11 @@ export class AppComponent extends ComponentBase {
   }
 
   override render(): void {
-    const element = this.getSourceElement();
+    this.clearSourceElementDescendants();
 
-    element.innerHTML = `
-      <div id="${this.topBar.id}"></div>
-      <div id="${this.fileSelect.id}"></div>
-      <div id="${this.spriteEditor.id}"></div>
-    `;
+    this.addComponentDivToSourceElement(this.topBar);
+    this.addComponentDivToSourceElement(this.fileSelect);
+    this.addComponentDivToSourceElement(this.spriteEditor);
 
     this.spriteEditor.render();
     this.topBar.render();

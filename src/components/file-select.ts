@@ -1,9 +1,10 @@
-import { ComponentBase } from "../component.ts";
+import { Component } from "../component.ts";
 
-export class FileSelect extends ComponentBase {
+export class FileSelect extends Component {
   constructor() {
     super();
     this.id = `file-select`;
+    this.class = `file-select-class`;
   }
 
   override render(): void {
