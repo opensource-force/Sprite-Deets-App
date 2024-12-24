@@ -1,27 +1,30 @@
-import { Component, StateUpdate, Store, Style } from "../component.ts";
+import { Component, ComponentBase, StateUpdate, Store, Style } from "../component.ts";
 import { FileSelect } from "./file-select.ts";
 import { SpriteEditor } from "./sprite-editor.ts";
+import { TopBar } from "./top-bar.ts";
 
-export class AppComponent implements Component {
-  id = `app-component`;
-  needsRender(_state: StateUpdate): boolean {
-    return true;
+export class AppComponent extends ComponentBase {
+  
+  // Components
+  fileSelect: FileSelect = new FileSelect();
+  spriteEditor: SpriteEditor = new SpriteEditor();
+  topBar: TopBar = new TopBar();
+  
+  constructor() {
+    super();
+    this.id = `app-component`;
   }
-  render(
-    store: Store,
-    _element: HTMLElement,
-    _style: Style,
-  ): Component[] {
-    let elements: Component[];
-    if (store.state.selectingFile) {
-      elements = [
-        new FileSelect(),
-      ];
-    } else {
-      elements = [
-        new SpriteEditor(),
-      ];
-    }
-    return elements;
+
+  override render(): void {
+    const element = this.getSourceElement();
+
+    element.innerHTML = `
+      <div id="${this.topBar.id}"></div>
+      <div id="${this.fileSelect.id}"></div>
+      <div id="${this.spriteEditor.id}"></div>
+    `;
+
+    this.spriteEditor.render();
+    this.topBar.render();
   }
 }

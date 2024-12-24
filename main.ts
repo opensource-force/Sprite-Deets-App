@@ -2,8 +2,7 @@ import { serveDir } from "https://deno.land/std/http/file_server.ts";
 import * as esbuild from "https://deno.land/x/esbuild@v0.19.12/mod.js";
 import process from "node:process";
 
-let bytes;
-const PORT = process.env.PORT || 8000;
+let bytes: Uint8Array;
 
 const watcher = Deno.watchFs(["./index.html", "./src"], { recursive: true });
 
@@ -39,7 +38,7 @@ await bundleTS();
 
 const sockets = new Set<WebSocket>();
 
-Deno.serve(async (req) => {
+Deno.serve({ port: 8000 }, async (req: Request) => {
   const url = new URL(req.url);
 
   if (url.pathname === "/") {
@@ -61,9 +60,9 @@ Deno.serve(async (req) => {
     fsRoot: "public",
     urlRoot: "",
   });
-}, { port: PORT });
+});
 
-console.log(`Dev server running on http://localhost:${PORT}`);
+console.log(`Dev server running on http://localhost:${8000}/`);
 
 for await (const event of watcher) {
   console.log("Watcher has seen some things...", event);

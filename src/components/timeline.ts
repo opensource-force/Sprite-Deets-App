@@ -1,30 +1,19 @@
 import {
-  Component,
-  StateUpdate,
-  Store,
-  Style,
-  StyleItem,
+  ComponentBase,
 } from "../component.ts";
 
-export class Timeline implements Component {
-  private content: string;
-  id = `timeline`;
+export class Timeline extends ComponentBase {
 
-  constructor(content: string) {
-    this.content = content;
+  constructor() {
+    super();
+    this.id = `timeline`;
   }
 
-  needsRender(_state: StateUpdate): boolean {
-    return true;
-  }
+  override render(): void {
+    const element = this.getSourceElement();
 
-  render(_store: Store, element: HTMLElement, style: Style): Component[] {
-    element.innerHTML = `<p>${this.content}</p>`;
-    style.push(
-      [
-        new StyleItem(
-          `.${this.id}`,
-          `
+    element.innerHTML = `<p>${this.id}</p>`;
+    element.style.cssText = `
           grid-column: span 3;
           display: flex;
           flex-direction: column;
@@ -34,10 +23,6 @@ export class Timeline implements Component {
           margin-top: 0.5rem;
           padding: 1rem;
           border-radius: 10px;
-      `,
-        ),
-      ],
-    );
-    return [];
+      `;
   }
 }
