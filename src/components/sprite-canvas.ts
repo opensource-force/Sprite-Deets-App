@@ -1,22 +1,22 @@
 import { Component } from "../component.ts";
 import { Controller } from "../controller.ts";
-import { SpriteDetailsController } from "../controllers/sprite-details-controller.ts";
+import { SpriteCanvasController } from "../controllers/sprite-canvas-controller.ts";
 
 export class SpriteCanvas extends Component {
-  private spriteDetailsController: SpriteDetailsController;
+  private spriteCanvasController: SpriteCanvasController;
 
   constructor() {
     super();
     this.id = `sprite-canvas`;
-    this.spriteDetailsController = Controller.getController<
-      SpriteDetailsController
-    >(SpriteDetailsController.typeName);
+    this.spriteCanvasController = Controller.getController<
+      SpriteCanvasController
+    >(SpriteCanvasController.typeName);
 
-    this.spriteDetailsController.subscribe(SpriteDetailsController.SCALED_PIXEL_SIZE_CHANGED_EVENT, this);
+    this.spriteCanvasController.subscribe(SpriteCanvasController.SCALED_PIXEL_SIZE_CHANGED_EVENT, this);
   }
 
   override notify(event: string): void {
-    if (event === SpriteDetailsController.SCALED_PIXEL_SIZE_CHANGED_EVENT) {
+    if (event === SpriteCanvasController.SCALED_PIXEL_SIZE_CHANGED_EVENT) {
       // Handled by the canvas itself
     }
     else {
@@ -57,7 +57,7 @@ export class SpriteCanvas extends Component {
     canvas.addEventListener("mousemove", (e) => {
       const ctx = canvas.getContext("2d");
       ctx?.clearRect(0, 0, 512, 512);
-      const pxSize = this.spriteDetailsController.getScaledPixelSize();
+      const pxSize = this.spriteCanvasController.getScaledPixelSize();
       const xPx = Math.floor(e.offsetX / pxSize);
       const yPx = Math.floor(e.offsetY / pxSize);
       ctx?.fillText(`x: ${xPx}, y: ${yPx}`, 10, 10);
@@ -86,9 +86,9 @@ export class SpriteCanvas extends Component {
     button.id = "increase-scale-button";
     button.innerText = "+";
     button.addEventListener("click", () => {
-      const newSize = this.spriteDetailsController.getScaledPixelSize() * 2;
+      const newSize = this.spriteCanvasController.getScaledPixelSize() * 2;
       if (newSize > 512) return;
-      this.spriteDetailsController.updateScaledPixelSize(newSize);
+      this.spriteCanvasController.updateScaledPixelSize(newSize);
     });
     return button;
   }
@@ -98,9 +98,9 @@ export class SpriteCanvas extends Component {
     button.id = "decrease-scale-button";
     button.innerText = "-";
     button.addEventListener("click", () => {
-      const newSize = this.spriteDetailsController.getScaledPixelSize() / 2;
+      const newSize = this.spriteCanvasController.getScaledPixelSize() / 2;
       if (newSize < 1) return;
-      this.spriteDetailsController.updateScaledPixelSize(newSize);
+      this.spriteCanvasController.updateScaledPixelSize(newSize);
     });
     return button;
   }

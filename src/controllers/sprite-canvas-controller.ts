@@ -10,8 +10,8 @@ export class SpriteCanvasData {
   }
 }
 
-export class SpriteDetailsController extends Controller {
-  public static typeName: string = "SpriteDetailsController";
+export class SpriteCanvasController extends Controller {
+  public static typeName: string = "SpriteCanvasController";
   spriteCanvasData: SpriteCanvasData = new SpriteCanvasData();
 
   public static readonly SCALED_PIXEL_SIZE_CHANGED_EVENT: string = "SCALED_PIXEL_SIZE_CHANGED_EVENT";
@@ -22,7 +22,7 @@ export class SpriteDetailsController extends Controller {
 
   public updateScaledPixelSize(newSize: number) {
     this.spriteCanvasData.scaledPixelSize = newSize;
-    this.postEvent(SpriteDetailsController.SCALED_PIXEL_SIZE_CHANGED_EVENT);
+    this.postEvent(SpriteCanvasController.SCALED_PIXEL_SIZE_CHANGED_EVENT);
   }
 
   public getScaledPixelSize(): number {
