@@ -1,6 +1,7 @@
 {
   "tasks": {
-    "dev": "deno run --allow-net --allow-read --allow-write --allow-env --allow-run --watch main.ts"
+    "check": "deno fmt --check && deno lint && deno check **/*.ts",
+    "dev": "deno run --allow-all --watch main.ts --inspect-brk --port 9229"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
@@ -8,10 +9,11 @@
   },
   "compilerOptions": {
     "lib": [
-      "dom"
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable",
+      "deno.ns",
+      "deno.unstable"
     ]
-  },
-  "unstable": [
-    "sloppy-imports"
-  ]
+  }
 }
