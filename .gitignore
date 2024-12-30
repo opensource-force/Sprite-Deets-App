@@ -1,3 +1,8 @@
+# Project stuff
+
+public/js/bundle.js
+public/js/bundle.js.map
+
 # Logs
 logs
 *.log
