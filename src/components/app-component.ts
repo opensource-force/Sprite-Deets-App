@@ -11,7 +11,7 @@ export class AppComponent extends Component {
 
   constructor() {
     super();
-    this.id = `app-component`;
+    this._id = `app-component`;
   }
 
   override render(): void {

@@ -6,8 +6,8 @@ import { Toolbar } from "./toolbar.ts";
 export class SpriteEditor extends Component {
   constructor() {
     super();
-    this.id = `sprite-editor`;
-    this.class = `sprite-editor-class`;
+    this._id = `sprite-editor`;
+    this._class = `sprite-editor-class`;
   }
 
   // Components

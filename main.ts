@@ -1,5 +1,6 @@
 import { serveDir } from "https://deno.land/std/http/file_server.ts";
 import * as esbuild from "https://deno.land/x/esbuild@v0.19.12/mod.js";
+import { vanillaExtractPlugin } from "@vanilla-extract/esbuild-plugin";
 
 let bytes: Uint8Array;
 const PORT = process.env.PORT || 8000;
@@ -16,15 +17,12 @@ async function bundleTS() {
       bundle: true,
       outfile: "public/js/bundle.js",
       format: "esm",
+      plugins: [
+        vanillaExtractPlugin({ outputCss: true, identifiers: "debug" }),
+      ],
       platform: "browser",
       sourcemap: true,
       target: "es2020",
-    });
-
-    await esbuild.build({
-      entryPoints: ["src/styles.css"],
-      bundle: true,
-      outfile: "public/css/bundle.css",
     });
 
     console.log("Bundle successful:", new Date().toLocaleTimeString());

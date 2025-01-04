@@ -1,13 +1,15 @@
 import { Component } from "../component.ts";
 import { Controller } from "../controller.ts";
 import { SpriteCanvasController } from "../controllers/sprite-canvas-controller.ts";
+import { ColliderInfo, AABBColliderInfo } from "./collider-info.ts";
+import { spriteCanvasStyle } from "./styles/sprite-canvas.css.ts";
 
 export class SpriteCanvas extends Component {
   private spriteCanvasController: SpriteCanvasController;
 
   constructor() {
     super();
-    this.id = `sprite-canvas`;
+    this._id = `sprite-canvas`;
     this.spriteCanvasController = Controller.getController<
       SpriteCanvasController
     >(SpriteCanvasController.typeName);
@@ -26,23 +28,20 @@ export class SpriteCanvas extends Component {
 
   override render(): void {
     const element = this.getSourceElement();
-  
+
     const canvas = this.configureCanvas();
 
     const menu = this.configureCanvasMenu();
     menu.appendChild(this.configureIncreaseScaleButton());
     menu.appendChild(this.configureDecreaseScaleButton());
 
-    element.style.cssText = `
-      grid-area: canvas;
-      height: auto;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1rem;
-      border-radius: 10px;
-    `;
+     const colliderInfoElement = this.createElement();
+     colliderInfoElement.id = "collider-info";
+     element.appendChild(colliderInfoElement);
+     const colliderInfo = this.configureColliderInfo(colliderInfoElement);
+
+    canvas.className = `${spriteCanvasStyle}`;
+
 
     element.appendChild(canvas);
     element.appendChild(menu);
@@ -103,6 +102,14 @@ export class SpriteCanvas extends Component {
       this.spriteCanvasController.updateScaledPixelSize(newSize);
     });
     return button;
+  }
+
+  configureColliderInfo(element: HTMLElement): ColliderInfo {
+    console.log("configureColliderInfo");
+    const colliderInfo = new AABBColliderInfo(null);
+    colliderInfo.configureFromSourceElement(element);
+    colliderInfo.render();
+    return colliderInfo;
   }
 
 }

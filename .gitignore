@@ -1,5 +1,6 @@
 # Project stuff
 
+public/js/*
 public/js/bundle.js
 public/js/bundle.js.map
 

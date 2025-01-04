@@ -5,7 +5,9 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
-    "@std/http": "jsr:@std/http@^1.0.12"
+    "@std/http": "jsr:@std/http@^1.0.12",
+    "@vanilla-extract/css": "npm:@vanilla-extract/css@^1.17.0",
+    "@vanilla-extract/esbuild-plugin": "npm:@vanilla-extract/esbuild-plugin@^2.3.13"
   },
   "compilerOptions": {
     "lib": [
