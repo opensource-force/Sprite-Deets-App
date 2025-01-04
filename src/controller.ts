@@ -1,4 +1,4 @@
-import { Component } from "./component.ts";
+import { Component } from './component.ts';
 
 export abstract class Controller {
   private static controllerMap: Map<string, Controller> = new Map();

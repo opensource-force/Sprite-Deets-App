@@ -1,4 +1,4 @@
-import { Controller } from "../controller.ts";
+import { Controller } from '../controller.ts';
 
 export class SpriteCanvasData {
   private _scaledPixelSize: number = 32;
@@ -11,10 +11,10 @@ export class SpriteCanvasData {
 }
 
 export class SpriteCanvasController extends Controller {
-  public static typeName: string = "SpriteCanvasController";
+  public static typeName: string = 'SpriteCanvasController';
   spriteCanvasData: SpriteCanvasData = new SpriteCanvasData();
 
-  public static readonly SCALED_PIXEL_SIZE_CHANGED_EVENT: string = "SCALED_PIXEL_SIZE_CHANGED_EVENT";
+  public static readonly SCALED_PIXEL_SIZE_CHANGED_EVENT: string = 'SCALED_PIXEL_SIZE_CHANGED_EVENT';
 
   constructor() {
     super();

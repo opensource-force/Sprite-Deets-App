@@ -1,4 +1,4 @@
-import { Component } from "../component.ts";
+import { Component } from '../component.ts';
 
 export class FileSelect extends Component {
   constructor() {

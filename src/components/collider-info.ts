@@ -1,14 +1,14 @@
-import { Component } from "../component.ts";
-import { Point, Rectangle, Size } from "../common-types.ts";
+import { Component } from '../component.ts';
+import { Point, Rectangle, Size } from '../common-types.ts';
 import {
   AxisAlignedBoundingBoxCollider,
   CapsuleCollider,
   CircleCollider,
   Collider,
   ColliderType,
-} from "../collider-types.ts";
+} from '../collider-types.ts';
 
-import { colliderInfoStyle } from "./styles/collider-info.css.ts";
+import { colliderInfoStyle } from './styles/collider-info.css.ts';
 
 export abstract class ColliderInfo extends Component {
   protected _collider: Collider;
@@ -63,8 +63,8 @@ export class AABBColliderInfo extends ColliderInfo {
   }
 
   configureColliderInfo(): HTMLDivElement {
-    const colliderInfo = document.createElement("div");
-    colliderInfo.id = "collider-info";
+    const colliderInfo = document.createElement('div');
+    colliderInfo.id = 'collider-info';
     // set colliderInfo class to collider-info
     colliderInfo.className = `${colliderInfoStyle}`;
 
@@ -75,8 +75,8 @@ export class AABBColliderInfo extends ColliderInfo {
   }
 
   configureInputs(): HTMLFormElement {
-    const form = document.createElement("form");
-    form.id = "collider-info-form";
+    const form = document.createElement('form');
+    form.id = 'collider-info-form';
     form.style.cssText = `
             display: flex;
             flex-direction: row;
@@ -87,29 +87,28 @@ export class AABBColliderInfo extends ColliderInfo {
         `;
 
     // x, y, width, height
-    
-    form.appendChild(this.configureInputWithLabel("X"));
-    form.appendChild(this.configureInputWithLabel("Y"));
-    form.appendChild(this.configureInputWithLabel("Width"));
-    form.appendChild(this.configureInputWithLabel("Height"));
-    
+
+    form.appendChild(this.configureInputWithLabel('X'));
+    form.appendChild(this.configureInputWithLabel('Y'));
+    form.appendChild(this.configureInputWithLabel('Width'));
+    form.appendChild(this.configureInputWithLabel('Height'));
 
     return form;
   }
 
-  configureInputWithLabel(labelText: string) : HTMLElement {
-    const input = document.createElement("input");
-    input.type = "number";
-    input.id = "x";
-    input.name = "x";
-    input.placeholder = "1";
+  configureInputWithLabel(labelText: string): HTMLElement {
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.id = 'x';
+    input.name = 'x';
+    input.placeholder = '1';
     input.style.cssText = `
             margin: 0.2rem;
             padding: 0.2rem;
             border-radius: 10px;
             width: 30px
         `;
-    const label = document.createElement("label");
+    const label = document.createElement('label');
     label.htmlFor = input.id;
     label.innerText = labelText;
     label.style.cssText = `
@@ -117,7 +116,7 @@ export class AABBColliderInfo extends ColliderInfo {
             padding: 0.5rem;
             border-radius: 10px;
         `;
-    const container = document.createElement("div");
+    const container = document.createElement('div');
     container.style.cssText = `
             display: flex;
             flex-direction: row;

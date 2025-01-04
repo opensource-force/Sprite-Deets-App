@@ -1,7 +1,7 @@
-import { Component } from "../component.ts";
-import { SpriteCanvas } from "./sprite-canvas.ts";
-import { Timeline } from "./timeline.ts";
-import { Toolbar } from "./toolbar.ts";
+import { Component } from '../component.ts';
+import { SpriteCanvas } from './sprite-canvas.ts';
+import { Timeline } from './timeline.ts';
+import { Toolbar } from './toolbar.ts';
 
 export class SpriteEditor extends Component {
   constructor() {

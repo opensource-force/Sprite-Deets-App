@@ -1,12 +1,12 @@
-import { Circle, Point, Rectangle, Size } from "./common-types.ts";
+import { Circle, Point, Rectangle, Size } from './common-types.ts';
 
 export enum ColliderType {
-  AABB = "aabb",
-  BOUNDING_BOX = "bounding_box",
-  CIRCLE = "circle",
-  POLYGON = "polygon",
-  CAPSULE = "capsule",
-  NONE = "none",
+  AABB = 'aabb',
+  BOUNDING_BOX = 'bounding_box',
+  CIRCLE = 'circle',
+  POLYGON = 'polygon',
+  CAPSULE = 'capsule',
+  NONE = 'none',
 }
 
 export abstract class Collider {

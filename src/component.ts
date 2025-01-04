@@ -10,7 +10,7 @@ export abstract class Component {
   public render(): void {
   }
 
-  protected createElement(type: string = "div"): HTMLElement {
+  protected createElement(type: string = 'div'): HTMLElement {
     const element = document.createElement(type);
     return element;
   }
@@ -42,7 +42,7 @@ export abstract class Component {
   }
 
   protected addDiv(element: HTMLElement, id: string, className: string): void {
-    const div = document.createElement("div");
+    const div = document.createElement('div');
     div.id = id;
     div.className = className;
     element.appendChild(div);
@@ -68,4 +68,3 @@ export abstract class Component {
     this._class = sourceElement.className;
   }
 }
-

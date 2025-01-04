@@ -17,5 +17,19 @@
       "deno.ns",
       "deno.unstable"
     ]
+  },
+  "fmt": {
+    "exclude": [
+      "node_modules",
+      "dist",
+      "public"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "singleQuote": true,
+    "proseWrap": "always"
   }
 }
