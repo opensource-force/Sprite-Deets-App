@@ -1,7 +1,7 @@
-import { Component } from "../component.ts";
+import { Component } from '../component.ts';
 
 export class TopBar extends Component {
-  override id = `top-bar`;
+  override _id = `top-bar`;
 
   override render(): void {
     const element = this.getSourceElement();

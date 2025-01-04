@@ -1,7 +1,7 @@
-import { Component } from "../component.ts";
-import { FileSelect } from "./file-select.ts";
-import { SpriteEditor } from "./sprite-editor.ts";
-import { TopBar } from "./top-bar.ts";
+import { Component } from '../component.ts';
+import { FileSelect } from './file-select.ts';
+import { SpriteEditor } from './sprite-editor.ts';
+import { TopBar } from './top-bar.ts';
 
 export class AppComponent extends Component {
   // Components
@@ -11,7 +11,7 @@ export class AppComponent extends Component {
 
   constructor() {
     super();
-    this.id = `app-component`;
+    this._id = `app-component`;
   }
 
   override render(): void {

@@ -1,15 +1,15 @@
-import { Component } from "../component.ts";
+import { Component } from '../component.ts';
 
 export class Timeline extends Component {
   constructor() {
     super();
-    this.id = `timeline`;
+    this._id = `timeline`;
   }
 
   override render(): void {
     const element = this.getSourceElement();
 
-    element.innerHTML = `<p>${this.id}</p>`;
+    element.innerHTML = `<p>${this._id}</p>`;
     element.style.cssText = `
           grid-column: span 3;
           display: flex;

@@ -1,7 +1,7 @@
-import { Controller } from "../controller.ts";
+import { Controller } from '../controller.ts';
 
 export class AppController extends Controller {
-  public static typeName: string = "AppController";
+  public static typeName: string = 'AppController';
   constructor() {
     super();
   }

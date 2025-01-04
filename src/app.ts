@@ -1,7 +1,7 @@
-import { AppComponent } from "./components/app-component.ts";
-import { Controller } from "./controller.ts";
-import { AppController } from "./controllers/app-controller.ts";
-import { SpriteCanvasController } from "./controllers/sprite-canvas-controller.ts";
+import { AppComponent } from './components/app-component.ts';
+import { Controller } from './controller.ts';
+import { AppController } from './controllers/app-controller.ts';
+import { SpriteCanvasController } from './controllers/sprite-canvas-controller.ts';
 
 const init = () => {
   Controller.registerController(
@@ -16,8 +16,8 @@ const init = () => {
   new AppComponent().render();
 };
 
-if (document.readyState !== "loading") {
+if (document.readyState !== 'loading') {
   init();
 } else {
-  self.addEventListener("DOMContentLoaded", init);
+  self.addEventListener('DOMContentLoaded', init);
 }
