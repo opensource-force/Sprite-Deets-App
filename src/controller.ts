@@ -5,14 +5,14 @@ export abstract class Controller {
 
   protected readonly componentsByEvents: Map<string, Component[]> = new Map();
 
-  subscribe(event: string, component: Component) {
+  public subscribe(event: string, component: Component) {
     if (!this.componentsByEvents.has(event)) {
       this.componentsByEvents.set(event, []);
     }
     this.componentsByEvents.get(event)?.push(component);
   }
 
-  unsubscribe(event: string, component: Component) {
+  public unsubscribe(event: string, component: Component) {
     const components = this.componentsByEvents.get(event);
     if (components) {
       const index = components.indexOf(component);
@@ -22,7 +22,7 @@ export abstract class Controller {
     }
   }
 
-  postEvent(event: string): void {
+  public postEvent(event: string): void {
     const components = this.componentsByEvents.get(event);
     if (components) {
       components.forEach((component) => {
