@@ -1,15 +1,21 @@
 import { Component } from '../component.ts';
 import { Controller } from '../controller.ts';
 import { SpriteCanvasController } from '../controllers/sprite-canvas-controller.ts';
-import { AABBColliderInfo, ColliderInfo } from './collider-info.ts';
-import { spriteCanvasStyle } from './styles/sprite-canvas.css.ts';
+import { LayeredCanvas } from './layered-canvas.ts';
+import { MouseState } from '../state/mouse-state.ts';
 
+/**
+ * The SpriteCanvas component is responsible for rendering the canvas that the user can draw on.
+ */
 export class SpriteCanvas extends Component {
   private spriteCanvasController: SpriteCanvasController;
+  private canvas: HTMLCanvasElement;
+  private configured: boolean = false;
+  private mouseState: MouseState = new MouseState();
+  private layerCanvas: LayeredCanvas = new LayeredCanvas();
 
   constructor() {
-    super();
-    this._id = `sprite-canvas`;
+    super('sprite-canvas');
     this.spriteCanvasController = Controller.getController<
       SpriteCanvasController
     >(SpriteCanvasController.typeName);
@@ -18,65 +24,117 @@ export class SpriteCanvas extends Component {
       SpriteCanvasController.SCALED_PIXEL_SIZE_CHANGED_EVENT,
       this,
     );
+
+    this.canvas = this.configureCanvas();
   }
 
   override notify(event: string): void {
     if (event === SpriteCanvasController.SCALED_PIXEL_SIZE_CHANGED_EVENT) {
-      // Handled by the canvas itself
+      this.render();
     } else {
       super.notify(event);
     }
   }
 
   override render(): void {
-    const element = this.getSourceElement();
+    if (!this.configured) {
+      const element = this.getSourceElement();
 
-    const canvas = this.configureCanvas();
+      const menu = this.configureCanvasMenu();
+      menu.appendChild(this.configureIncreaseScaleButton());
+      menu.appendChild(this.configureDecreaseScaleButton());
+      menu.appendChild(this.configureClearButton());
 
-    const menu = this.configureCanvasMenu();
-    menu.appendChild(this.configureIncreaseScaleButton());
-    menu.appendChild(this.configureDecreaseScaleButton());
+      element.appendChild(this.canvas);
+      element.appendChild(menu);
+      this.configured = true;
+    }
 
-    const colliderInfoElement = this.createElement();
-    colliderInfoElement.id = 'collider-info';
-    element.appendChild(colliderInfoElement);
-    const colliderInfo = this.configureColliderInfo(colliderInfoElement);
+    this.renderCanvas();
+  }
 
-    canvas.className = `${spriteCanvasStyle}`;
-
-    element.appendChild(canvas);
-    element.appendChild(menu);
+  renderCanvas(): void {
+    this.drawGrid();
+    this.drawCursor();
+    this.layerCanvas.render();
   }
 
   configureCanvas(): HTMLCanvasElement {
-    const canvas = document.createElement('canvas');
-    canvas.id = 'sprite-canvas-x';
-    canvas.width = 512;
+    const canvas = Component.createElement('canvas', 'editor-canvas') as HTMLCanvasElement;
+    canvas.width = 768;
     canvas.height = 512;
-    canvas.style.border = '1px solid #000000';
-    canvas.addEventListener('mousemove', (e) => {
-      const ctx = canvas.getContext('2d');
-      ctx?.clearRect(0, 0, 512, 512);
-      const pxSize = this.spriteCanvasController.getScaledPixelSize();
-      const xPx = Math.floor(e.offsetX / pxSize);
-      const yPx = Math.floor(e.offsetY / pxSize);
-      ctx?.fillText(`x: ${xPx}, y: ${yPx}`, 10, 10);
-      ctx?.fillRect(xPx * pxSize, yPx * pxSize, pxSize, pxSize);
-    });
+    this.mouseState.registerMouseEvents(canvas, this.handleMouse.bind(this));
+    this.layerCanvas = new LayeredCanvas(768, 512);
+    this.layerCanvas.setTargetCanvas(canvas);
+
+    this.layerCanvas.addLayer('grid', 0, 768, 512);
+    this.layerCanvas.addLayer('draw', 2, 768, 512);
+    this.layerCanvas.addLayer('cursor', 10, 768, 512);
+
     return canvas;
+  }
+
+  override handleMouse(_mouse: MouseState): void {
+    if (_mouse.leftButton.isHeld()) {
+      // Handle the left button for using the active tool
+      this.layerCanvas.mergeLayer('draw', (ctx) => {
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if (this.mouseState.isInside) {
+          const pxSize = this.spriteCanvasController.getScaledPixelSize();
+          const xPx = Math.floor(this.mouseState.curMousePosition.x / pxSize);
+          const yPx = Math.floor(this.mouseState.curMousePosition.y / pxSize);
+          ctx.fillText(`x: ${xPx}, y: ${yPx}`, 10, 10);
+          ctx.fillRect(xPx * pxSize, yPx * pxSize, pxSize, pxSize);
+        }
+      });
+    }
+    this.renderCanvas();
+  }
+
+  drawGrid(): void {
+    this.layerCanvas.updateLayer('grid', (ctx) => {
+      if (!ctx) {
+        return;
+      }
+
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      const pxSize = this.spriteCanvasController.getScaledPixelSize();
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 1;
+
+      for (let i = 0; i < this.canvas.width; i += pxSize) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, this.canvas.height);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(this.canvas.width, i);
+        ctx.stroke();
+      }
+    });
+  }
+
+  drawCursor(): void {
+    this.layerCanvas.updateLayer('cursor', (ctx) => {
+      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      if (this.mouseState.isInside) {
+        const pxSize = this.spriteCanvasController.getScaledPixelSize();
+        const xPx = Math.floor(this.mouseState.curMousePosition.x / pxSize);
+        const yPx = Math.floor(this.mouseState.curMousePosition.y / pxSize);
+        ctx.fillText(`x: ${xPx}, y: ${yPx}`, 10, 10);
+        ctx.fillRect(xPx * pxSize, yPx * pxSize, pxSize, pxSize);
+      }
+    });
   }
 
   configureCanvasMenu(): HTMLDivElement {
     const menu = document.createElement('div');
     menu.id = 'sprite-canvas-menu';
     menu.style.cssText = `
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem;
-      border-radius: 10px;
-      background: #ffffff;
+      position: relative;
+      height: 100%;
     `;
     return menu;
   }
@@ -105,11 +163,13 @@ export class SpriteCanvas extends Component {
     return button;
   }
 
-  configureColliderInfo(element: HTMLElement): ColliderInfo {
-    console.log('configureColliderInfo');
-    const colliderInfo = new AABBColliderInfo(null);
-    colliderInfo.configureFromSourceElement(element);
-    colliderInfo.render();
-    return colliderInfo;
+  configureClearButton(): HTMLButtonElement {
+    const button = Component.createElement('button', 'clear-button') as HTMLButtonElement;
+    button.innerText = 'Clear';
+    button.addEventListener('click', () => {
+      this.layerCanvas.clearLayer('draw');
+      this.renderCanvas();
+    });
+    return button;
   }
 }

@@ -18,15 +18,21 @@ async function bundleTS() {
       outfile: 'public/js/bundle.js',
       format: 'esm',
       plugins: [
-        vanillaExtractPlugin({ outputCss: true, identifiers: 'debug' }),
+        //vanillaExtractPlugin({ outputCss: true, identifiers: 'debug' }),
       ],
       platform: 'browser',
       sourcemap: true,
+      sourceRoot: 'src',
       target: 'es2020',
     });
 
+    return await esbuild.build({
+      entryPoints: ['src/styles.css'],
+      bundle: true,
+      outfile: 'public/css/static_bundle.css',
+    });
+
     console.log('Bundle successful:', new Date().toLocaleTimeString());
-    return result;
   } catch (error) {
     console.error('Bundle failed:', error);
   }

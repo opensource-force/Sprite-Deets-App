@@ -1,15 +1,15 @@
 import { Component } from '../component.ts';
 
-export class TopBar extends Component {
+export class LeftColumn extends Component {
   constructor() {
-    super('top-bar');
+    super('left-column');
   }
 
   override render(): void {
     const element = this.getSourceElement();
 
     const text = document.createElement('span');
-    text.innerHTML = `<p>Top Bar</p>`;
+    text.innerHTML = `<p>Left Column</p>`;
     element.appendChild(text);
   }
 }

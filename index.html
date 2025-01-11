@@ -1,14 +1,15 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SpriteDeets</title>
-  <link rel="stylesheet" href="/js/bundle.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpriteDeets</title>
+    <link rel="stylesheet" href="/css/static_bundle.css" />
 </head>
 
 <body>
-<div id="app"></div>
+    <div id="app"></div>
     <h1>SpriteDeets</h1>
     <script type="module" src="/js/bundle.js"></script>
     <script>
@@ -20,6 +21,14 @@
             }
         };
     </script>
-    <div id="app-component"></div>
+    <div id="app-component" class="main-window">
+        <div id="top-bar" class="top-bar"></div>
+        <div id="columns-container" class="columns-container">
+            <div id="left-column" class="left-column"></div>
+            <div id="middle-column" class="middle-column"></div>
+            <div id="right-column" class="right-column"></div>
+        </div>
+    </div>
 </body>
+
 </html>
